@@ -1,0 +1,8 @@
+export const GET_HOME_DATA = "home/GET_HOME_DATA"
+export const CHANGE_FOCUS = "writer/CHANGE_FOCUS"
+export const CHANGE_WRITER_LIST = "writer/CHANGE_WRITER_LIST"
+export const OPEN_ROTATE = "writer/OPEN_ROTATE"
+export const CLOSE_ROTATE = "writer/CLOSE_ROTATE"
+export const ADD_LIST_ITEM = "list/ADD_LIST_ITEM"
+export const SCROLL_TOP_SHOW = "home/SCROLL_TOP_SHOW"
+export const SCROLL_TOP_HIDDEN = "home/SCROLL_TOP_HIDDEN"
