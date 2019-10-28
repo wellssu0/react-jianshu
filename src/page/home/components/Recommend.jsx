@@ -1,20 +1,19 @@
 import React from 'react'
 import { connect } from "react-redux"
-import {
-  RecommendWrapper,
-  RecommendItem,
-}from "./../style"
+
+import { RecommendWrapper, RecommendItem, }from "./../style"
 
 const Recommend = (props) => {
   const { recommendList } = props
+
   return(
     <RecommendWrapper>
-    {
-      recommendList.map(item => (
-        <RecommendItem key={item.get("id")} href={item.get("href")} imgUrl={item.get("imgUrl")}> 
-        </RecommendItem>
-      ))
-    }
+      {
+        recommendList.map(item => (
+          <RecommendItem key={item.get("id")} href={item.get("href")} imgUrl={item.get("imgUrl")}> 
+          </RecommendItem>
+        ))
+      }
     </RecommendWrapper>
   )
 }

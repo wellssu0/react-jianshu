@@ -1,13 +1,11 @@
 import React from 'react'
 import { connect } from "react-redux"
 
-import {
-  TopicList,
-  TopicItem,
-} from "../style"
+import { TopicList, TopicItem, } from "../style"
 
 const Topic = (props) => {
   const { topicList ,themeNight } = props
+  
   return (
     <TopicList themeNight={themeNight}>
       {
@@ -18,7 +16,7 @@ const Topic = (props) => {
           </TopicItem>
         ))
       }
-      <a className="more" href="#">更多热门专题</a>
+      <a className="more" href="/">更多热门专题</a>
     </TopicList>
     
   )

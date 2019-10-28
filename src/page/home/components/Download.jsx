@@ -1,8 +1,7 @@
 import React from 'react'
 
-import {
-  DownloadWrapper,
-} from './../style'
+import { DownloadWrapper } from './../style'
+
 const Download = (props) => {
   return(
     <DownloadWrapper href="#"  >

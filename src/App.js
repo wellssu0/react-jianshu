@@ -6,6 +6,7 @@ import { ThemeProvider } from "styled-components"
 import Header from "./common/header";
 import Home from "./page/home";
 import Detail from "./page/detail";
+import Login from "./page/login";
 import store from "./store";
 function App() {
   const theme ={
@@ -36,7 +37,8 @@ function App() {
         <Router>
           <Header />
           <Route path="/" exact component={Home}></Route>
-          <Route path="/detail" exact component={Detail}></Route>
+          <Route path="/detail/:id" exact component={Detail}></Route>
+          <Route path="/login" exact component={Login}></Route>
         </Router>
       </ThemeProvider>
     </Provider>

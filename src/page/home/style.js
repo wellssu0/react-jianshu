@@ -16,22 +16,29 @@ export const Main = styled.div`
 `
 export const LeftArea = styled.div`
   float: left;
-  width: 640px;
+  width: 625px;
   margin-left:15px;
   padding-top:30px;
   box-sizing: border-box;
+  
+`
+export const ViewBox = styled.div`
+  float: left;
+  width: 625px;
+  box-sizing: border-box;
   .img-pic{
-    width:625px;
-    height:270px;
+    width:100%;
+    height:100%;
     border-radius:4px;
   }
 `
+
 export const RightArea = styled.div`
   float: right;
   width: 280px;
   padding-top:27px;
 `
-export const ScrollTop = styled.div`
+export const Scroll = styled.div`
   position:fixed;
   opacity:0;
   visibility:hidden;
@@ -117,7 +124,8 @@ export const ListItem = styled.div`
       ? props.theme.night.borderColor
       : props.theme.day.borderColor};
   .imgA{
-    margin-top:10px;
+    margin-top:15px;
+    margin-left:15px;
     float:right;
   }
   .img{

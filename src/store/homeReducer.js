@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable'
 
-import * as constants from "./constants"
+import * as constants from "../constants"
 
 const defaultState = fromJS({
   scrollShow:false,
@@ -9,12 +9,14 @@ const defaultState = fromJS({
   topicList:[],
   contentList:[],
   recommendList:[],
-  writerList:[]
+  writerList:[],
+  isLogIn:false,
+  page:1,
   })
   
-const reducer = (state = defaultState,action) => {
+const homeReducer = (state = defaultState,action) => {
   switch(action.type){
-    case constants.GET_HOME_DATA :
+    case constants.SET_HOME_DATA :
       return state.merge({
         footerLink:fromJS(action.data.footerLink),
         topicList:fromJS(action.data.topicList),
@@ -24,13 +26,16 @@ const reducer = (state = defaultState,action) => {
       })
     case constants.CHANGE_FOCUS :
       return state.setIn(["writerList" , action.item.get("id")-1,"focusd"],!action.item.get('focusd'))
-    case constants.OPEN_ROTATE :
+    case constants.WRITER_OPEN_ROTATE :
       return state.set("rotate",true)
-    case constants.CLOSE_ROTATE :
+    case constants.WRITER_CLOSE_ROTATE :
       return state.set("rotate",false)
     case constants.CHANGE_WRITER_LIST :
-      return state.set("writerList",fromJS(action.data))
-    case constants.ADD_LIST_ITEM :
+      return state.merge({
+        writerList:fromJS(action.data),
+        page:fromJS(state.get('page')+1)
+      })
+    case constants.SET_ADD_LIST_ITEM :
       return state.set("contentList",[...state.get("contentList"),...fromJS(action.data)])
     case constants.SCROLL_TOP_SHOW :
       return state.set("scrollShow",true)
@@ -41,4 +46,4 @@ const reducer = (state = defaultState,action) => {
   }
     
 }
-export default reducer
+export default homeReducer

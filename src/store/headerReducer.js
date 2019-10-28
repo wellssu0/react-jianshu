@@ -1,4 +1,4 @@
-import * as actionTypes from './actionTypes'
+import * as constants from '../constants'
 import { fromJS } from 'immutable'
 
 const defaultState = fromJS({
@@ -10,34 +10,34 @@ const defaultState = fromJS({
   page:0,
   mouseIn:false,
 })
- const reducer = (state = defaultState, action) => {
+ const headerReducer = (state = defaultState, action) => {
   switch(action.type){
-    case actionTypes.SEARCH_FOCUS:
+    case constants.SEARCH_FOCUS:
       return state.set("focusd",true)
-    case actionTypes.SEARCH_BLUR:
+    case constants.SEARCH_BLUR:
       return state.set('focusd',false)
-    case actionTypes.SEARCH_LIST:
-      return state.set('searchInfoList',action.data)
-    case actionTypes.SET_PAGE:
+    case constants.SET_SEARCH_INFO_LIST:
+      return state.set('searchInfoList',fromJS(action.data))
+    case constants.SET_PAGE:
       return state.set('page',action.page)
-    case actionTypes.MOUSE_ENTER:
+    case constants.MOUSE_ENTER:
       return state.set('mouseIn',true)
-    case actionTypes.MOUSE_LEAVE:
+    case constants.MOUSE_LEAVE:
       return state.set('mouseIn',false)
-    case actionTypes.SWITCH_PAGE:
+    case constants.SWITCH_PAGE:
       return state.set('page',action.page)
-    case actionTypes.OPEN_ROTATE:
+    case constants.SEARCH_OPEN_ROTATE:
       return state.set('showAnimation',true)
-    case actionTypes.CLOSE_ROTATE:
+    case constants.SEARCH_CLOSE_ROTATE:
       return state.set('showAnimation',false)
-    case actionTypes.BLACK_THEME:
+    case constants.BLACK_THEME:
       return state.set('themeNight',true)
-    case actionTypes.WHITE_THEME:
+    case constants.WHITE_THEME:
       return state.set('themeNight',false)
-    case actionTypes.TOGGLE_THEME_BOX:
+    case constants.TOGGLE_THEME_BOX:
       return state.set('themeBtn',!state.get("themeBtn"))
     default:
       return state
   }
 }
-export default reducer
+export default headerReducer

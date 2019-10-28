@@ -1,8 +1,8 @@
 import React from 'react'
 import { CSSTransition } from 'react-transition-group'
-import { Link } from "react-router-dom"
+import { Link,withRouter  } from "react-router-dom"
 import { connect } from 'react-redux'
-import { actionsCreators } from './store'
+import * as actionCreators from '../../actionCreators'
 import {
   SearchInfo,
   SearchInfoTitle,
@@ -31,39 +31,65 @@ import {
 
 class Header extends React.PureComponent {
   render() {
-    const { focusd, page, mouseIn, showAnimation, themeBtn, themeNight,searchInfoList, handleFocus, handleBlur, mouseLeave, mouseEnter, switchPage, closeRotateAnimotion,handleBlack,handleWhite,handleToggleShowThemeBox } = this.props
+    const { focusd, page, mouseIn, showAnimation, themeBtn, themeNight,searchInfoList, handleFocus, handleBlur,handleLogin, history, mouseLeave, mouseEnter, switchPage, closeRotateAnimotion,handleBlack,handleWhite,handleToggleShowThemeBox ,isLogin,handleLogout} = this.props
     const newPage = page % 5
     const newList = searchInfoList.slice(newPage * 10, (newPage + 1) * 10)
     return (
       <HeaderWrapper themeNight={themeNight} >
         <NavAll>
           <Link to="/"><Logo /></Link>
-          <NavItemWrite><i className="iconfont">&#xe615;</i>写文章</NavItemWrite>
-          <NavItemSignIn>注册</NavItemSignIn>
-          <NavItemLogin themeNight={themeNight}>登录</NavItemLogin>
+
+          <NavItemWrite>
+            <i className="iconfont">&#xe615;</i>写文章
+          </NavItemWrite>
+
+          <NavItemSignIn >
+            注册
+          </NavItemSignIn>
+
+          
+          {!isLogin &&
+            <NavItemLogin themeNight={themeNight} onClick={()=>handleLogin(history)}>
+            登录
+            </NavItemLogin>
+          }
+          {isLogin &&
+            <NavItemLogin themeNight={themeNight} onClick={()=>handleLogout()}>
+            退出
+            </NavItemLogin>
+          }
+
           <NavItemBeta></NavItemBeta>
+
           <NavItemAa 
             onClick={handleToggleShowThemeBox}
-            themeNight={themeNight}>
+            themeNight={themeNight}
+          >
             <i className="iconfont">&#xe636;</i>
             {themeBtn &&
               <React.Fragment>
-              <ThemeBefore themeNight={themeNight}></ThemeBefore>
-              <ThemeBox themeNight={themeNight}>
-                <ThemeTitle themeNight={themeNight}>夜间模式</ThemeTitle>
-                <ThemeOpenBtn themeNight={themeNight} onClick={handleBlack}>开</ThemeOpenBtn>
-                <ThemeCloseBtn themeNight={themeNight} onClick={handleWhite}>关</ThemeCloseBtn>
-              </ThemeBox>
+                <ThemeBefore themeNight={themeNight}></ThemeBefore>
+                <ThemeBox themeNight={themeNight}>
+                  <ThemeTitle themeNight={themeNight}>夜间模式</ThemeTitle>
+                  <ThemeOpenBtn themeNight={themeNight} onClick={handleBlack}>开</ThemeOpenBtn>
+                  <ThemeCloseBtn themeNight={themeNight} onClick={handleWhite}>关</ThemeCloseBtn>
+                </ThemeBox>
               </React.Fragment>
             }
           </NavItemAa>
           
           
           <NavMiddle>
+
             <Link to="/">
-              <NavItemLeft className="home active"><i className="iconfont">&#xe786;</i>首页</NavItemLeft>
+              <NavItemLeft className="home active">
+                <i className="iconfont">&#xe786;</i>首页
+              </NavItemLeft>
             </Link>
-            <NavItemLeft themeNight={themeNight}><i className="iconfont">&#xe63b;</i>下载App</NavItemLeft>
+
+            <NavItemLeft themeNight={themeNight}>
+              <i className="iconfont">&#xe63b;</i>下载App
+            </NavItemLeft>
             
             <SearchWrapper themeNight={themeNight}>
               <CSSTransition
@@ -81,6 +107,7 @@ class Header extends React.PureComponent {
               <i className={focusd ? 'focusd iconfont search' : 'iconfont search'}>&#xe658;</i>
               
             </SearchWrapper>
+
             {(focusd || mouseIn) &&
               <SearchInfo themeNight={themeNight}
                 onMouseEnter={mouseEnter}
@@ -98,7 +125,9 @@ class Header extends React.PureComponent {
                 <SearchInfoList>
                   {
                     newList.map((item, index) => (
-                      <SearchInfoItem themeNight={themeNight} key={index}>{item}</SearchInfoItem>
+                      <SearchInfoItem href='/' themeNight={themeNight} key={index}>
+                        {item}
+                      </SearchInfoItem>
                     ))
                   }
                 </SearchInfoList>
@@ -119,42 +148,50 @@ const mapStateToProps = (state) => {
     mouseIn: state.getIn(['header', 'mouseIn']),
     showAnimation: state.getIn(['header', 'showAnimation']),
     themeBtn: state.getIn(['header', 'themeBtn']),
-    themeNight: state.getIn(['header', 'themeNight'])
+    themeNight: state.getIn(['header', 'themeNight']),
+    isLogin: state.getIn(['login', 'login'])
   }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
     handleFocus(searchInfoList) {
-      (searchInfoList.size === 0) && dispatch(actionsCreators.getSearchInfoList())
-      dispatch(actionsCreators.getFocusAction())
+      (searchInfoList.size === 0) && dispatch(actionCreators.getSearchInfoList())
+      dispatch(actionCreators.getFocusAction())
     },
     handleBlur() {
-      dispatch(actionsCreators.getBlurAction())
+      dispatch(actionCreators.getBlurAction())
     },
     mouseEnter() {
-      dispatch(actionsCreators.getMouseEnterAction())
+      dispatch(actionCreators.getMouseEnterAction())
     },
     mouseLeave() {
-      dispatch(actionsCreators.getMouseLeaveAction())
+      dispatch(actionCreators.getMouseLeaveAction())
     },
     switchPage(page) {
-      dispatch(actionsCreators.getSwitchPageAction(page))
-      dispatch(actionsCreators.getOpenRotateAction())
+      dispatch(actionCreators.getSwitchPageAction(page))
+      dispatch(actionCreators.getOpenRotateAction())
     },
     closeRotateAnimotion(){
-      dispatch(actionsCreators.getCloseRotateAction())
+      dispatch(actionCreators.getCloseRotateAction())
     },
     handleBlack(){
-      dispatch(actionsCreators.getBlackThemeAction())
+      dispatch(actionCreators.getBlackThemeAction())
     },
     handleWhite(){
-      dispatch(actionsCreators.getWhiteThemeAction())
+      dispatch(actionCreators.getWhiteThemeAction())
     },
     handleToggleShowThemeBox(){
-      dispatch(actionsCreators.getToggleShowThemeBoAction())
+      dispatch(actionCreators.getToggleShowThemeBoAction())
     },
+    handleLogin(history){
+      history.push('/login')
+    },
+    handleLogout(history){
+      dispatch(actionCreators.logout())
+    },
+   
 
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header))
