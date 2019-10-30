@@ -79,11 +79,13 @@ export const TopicList = styled.div`
   }
 `
 export const TopicItem = styled.div`
-  float:left;
-  overflow:hidden;
-  margin: 0 25px 15px 0;
-  height:32px;
-  border-radius:4px;
+    float: left;
+    box-sizing: border-box;
+    overflow: hidden;
+    margin: 0 27px 15px 1px;
+    height: 32px;
+    border-radius: 4px;
+
   border:1px solid ${props =>
     props.themeNight
       ? props.theme.night.borderColor
@@ -93,15 +95,12 @@ export const TopicItem = styled.div`
       ? props.theme.night.TopicBackground
       : props.theme.day.TopicBackground};
   .img{
-    float:left;
-    display:block;
-    margin-top:-2;
     width:38px;
-    height:32px;
+    height:100%;
   }
   .link{
-    float:left;
-    display:block;
+
+    vertical-align:top;
     padding:0 10px;
     text-decoration:none;
     line-height:32px;
